@@ -1,6 +1,7 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
 options = webdriver.ChromeOptions()
 options.binary_location = r"C:\Program Files\Google\Chrome Beta\Application\chrome.exe"
@@ -16,7 +17,8 @@ def setup(request):
     browser_name = request.config.getoption("--browser_name")
 
     if browser_name == 'chrome':
-        service_obj = Service(r'C:\Users\USER\Desktop\drivers\chromedriver.exe')
+        service_obj = Service(ChromeDriverManager().install())
+        #service_obj = Service(r'C:\Users\USER\Desktop\drivers\chromedriver.exe')
         driver = webdriver.Chrome(service=service_obj, options=options)
     elif browser_name == 'firefox':
         service_obj = Service(r'C:\Users\USER\Desktop\drivers\geckodriver.exe')
